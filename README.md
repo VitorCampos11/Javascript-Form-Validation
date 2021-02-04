@@ -16,6 +16,7 @@
 * [x] Abstraindo JavaScript para arquivo externo
 * [x] Executando após document is readystate complete
 * [x] Convertendo JavaScript Procedural para JavaScript Orientado a Objetos
+* [x] Abstraindo CSS
 * [ ] Implementar método de validação para E-mail e Password
 * [ ] Implementar corretamente o CSS para cada campo de validação
 * [ ] Implementar Payload com as informações do formulário - JSON

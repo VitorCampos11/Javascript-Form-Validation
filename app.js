@@ -1,57 +1,81 @@
-// (function () {
-//   if (document.readyState === "complete") {
-//     validateEmail();
-//     validatePassword();
-//   }
-// })();
-
-// function validateEmail() {
-//   const form = document.querySelector("#form");
-//   const email = document.querySelector("#email");
-//   const pattern = /^[^ ]+@[a-z]+\.[a-z]{2,3}$/;
-
-//   if (email.value.match(pattern)) {
-//     form.classList.add("valid");
-//     form.classList.remove("invalid");
-//   } else {
-//     form.classList.remove("valid");
-//     form.classList.add("invalid");
-//   }
-// }
-
-// function validatePassword() {
-// }
+const ReaderDom = (component) =>
+  new DOMParser().parseFromString(component, "text/html").querySelector("body")
+    .firstChild;
 
 /*
  * JAVASCRIPT ORIENTADO A OBJETO - EXECUTA MÉTODO, PODENDO SER DECLARADO EM QUALQUER LUGAR DO SCRIPT
  */
-class App {
+
+class AppRoot extends HTMLElement {
   constructor() {
-    this.app = {};
-    this.initialize();
+    super();
+    this.appendChild(ReaderDom(`<app-login></app-login>`));
+  }
+}
+
+class Format {
+  constructor() {}
+
+  // responsável por retorna uma lista de id
+  static formatToCamelCase(text) {
+    let div = document.createElement("div");
+    div.innerHTML = `<div data-${text}="id"></div>`;
+    return Object.keys(div.firstChild.dataset)[0];
+  }
+}
+
+class Template {
+  constructor() {}
+
+  static loginTemplateComponent() {
+    return `
+      <div class="container">
+      <h3>Email Validation Check</h3>
+      <form id="form">
+        <div class="form-group" id="container-email">
+          <input type="text" id="email" placeholder="E-mail" required name="email">
+          <span class="indicator"></span>
+        </div>
+        <div class="form-group" id="container-password">
+          <input type="password" id="password" placeholder="Senha" required name="password">
+          <span class="indicator"></span>
+          <div id="label-checks" class="checks">
+            <span>Números</span>&nbsp;,&nbsp;
+            <span>Letras</span>&nbsp;,
+            <span>Caractere especiais</span>&nbsp;,
+            <span>Acima 8 caracteres</span>
+          </div>
+        </div>
+        <div class="button-container">
+          <button disabled="true" id="btn-submit-login" class="btn-submit" type="submit">ENTRAR</button>
+        </div>
+      </form>
+    </div>
+    `;
+  }
+}
+
+class LoginComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.appendChild(ReaderDom(Template.loginTemplateComponent()));
+    this.login = {};
+
+    this.querySelectorAll("[id]").forEach(
+      (element) => (this.login[Format.formatToCamelCase(element.id)] = element)
+    );
+
     this.initializeEvents();
 
     // debug
-    console.log(this.app);
-  }
-
-  // inicializar o app
-  initialize() {
-    // criar uma lista de id e coloca dentro da propriedade
-    document.querySelectorAll("[id]").forEach((element) => {
-      this.app[Format.formatToCamelCase(element.id)] = element;
-    });
+    console.log(this.login);
   }
 
   initializeEvents() {
     this.basicValidateToForm();
-    this.app.form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      // criar o payload aqui
-    });
   }
+
   basicValidateToForm() {
-    // this.app.btnSubmitLogin.setAttribute("disabled", true);
     this.isValid = {
       validEmail: false,
       validLength: false,
@@ -67,7 +91,7 @@ class App {
     const patterLetter = /[A-Za-z]+/g;
 
     // events password
-    this.app.password.addEventListener("keyup", ({ target }) => {
+    this.login.password.addEventListener("keyup", ({ target }) => {
       this.isValid.validNumber =
         target.value.match(patterNumber) != null ? true : false;
       this.isValid.validSpecial =
@@ -82,47 +106,37 @@ class App {
         this.isValid.validLetter &&
         this.isValid.validLength
       ) {
-        this.app.labelChecks.style.display = "none";
-        this.app.containerPassword.classList.add("valid");
-        this.app.containerPassword.classList.remove("invalid");
+        this.login.labelChecks.style.display = "none";
+        this.login.containerPassword.classList.add("valid");
+        this.login.containerPassword.classList.remove("invalid");
       } else {
-        this.app.labelChecks.style.display = "block";
-        this.app.containerPassword.classList.remove("valid");
-        this.app.containerPassword.classList.add("invalid");
+        this.login.labelChecks.style.display = "block";
+        this.login.containerPassword.classList.remove("valid");
+        this.login.containerPassword.classList.add("invalid");
       }
-      this.app.btnSubmitLogin.disabled = Object.values(this.isValid).includes(
+      this.login.btnSubmitLogin.disabled = Object.values(this.isValid).includes(
         false
       );
     });
 
     // events email
-    this.app.email.addEventListener("keyup", ({ target }) => {
+    this.login.email.addEventListener("keyup", ({ target }) => {
       this.isValid.validEmail =
         target.value.match(patternEmail) != null ? true : false;
 
       if (this.isValid.validEmail) {
-        this.app.containerEmail.classList.add("valid");
-        this.app.containerEmail.classList.remove("invalid");
+        this.login.containerEmail.classList.add("valid");
+        this.login.containerEmail.classList.remove("invalid");
       } else {
-        this.app.containerEmail.classList.remove("valid");
-        this.app.containerEmail.classList.add("invalid");
+        this.login.containerEmail.classList.remove("valid");
+        this.login.containerEmail.classList.add("invalid");
       }
-      this.app.btnSubmitLogin.disabled = Object.values(this.isValid).includes(
+      this.login.btnSubmitLogin.disabled = Object.values(this.isValid).includes(
         false
       );
     });
   }
 }
 
-class Format {
-  constructor() {}
-
-  // responsável por retorna uma lista de id
-  static formatToCamelCase(text) {
-    let div = document.createElement("div");
-    div.innerHTML = `<div data-${text}="id"></div>`;
-    return Object.keys(div.firstChild.dataset)[0];
-  }
-}
-
-window.app = new App();
+window.customElements.define("app-root", AppRoot);
+window.customElements.define("app-login", LoginComponent);

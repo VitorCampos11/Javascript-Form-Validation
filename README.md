@@ -23,7 +23,7 @@
 * [ ] Implementar icone pra limpar campus preenchidos
 * [ ] Implementar Payload com as informações do formulário - JSON
 * [ ] Implementar notificação de error e validação
-* [ ] Abstrair HTML para Web Component
+* [x] Abstrair HTML para Web Component
 
 <h4 align="center"> 
 	🚧  Status 🚀 Concluido...  🚧

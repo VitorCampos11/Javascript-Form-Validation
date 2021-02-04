@@ -1,41 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+  <title>Login</title>
 </head>
 
 <body>
-  <div>
-    <h3>Email Validation Check</h3>
-    <form action="" id="form">
-      <div class="inputBo">
-        <input type="text" id="email" placeholder="Enter Email Address" onkeyup="validate();">
-        <span class="indicator"></span>
-      </div>
-    </form>
-  </div>
-  <script>
-    function validate() {
-      const form = document.getElementById('form');
-      const email = document.getElementById('email').value;
-      const pattern = /^[^ ]+@[a-z]+\.[a-z]{2,3}$/
-
-      if (email.match(pattern)) {
-        form.classList.add('valid')
-        form.classList.remove('invalid')
-
-      } else {
-        form.classList.remove('valid')
-        form.classList.add('invalid')
-
-      }
-
-    }
-  </script>
+  <main class="app">
+    <div class="container">
+      <h3>Email Validation Check</h3>
+      <form id="form">
+        <div class="form-group">
+          <input type="text" id="email" placeholder="Enter Email Address" onkeyup="validate();">
+          <span class="indicator"></span>
+        </div>
+        <div class="form-group">
+          <input type="text" id="password" placeholder="Enter Email Address" onkeyup="validate();">
+          <span class="indicator"></span>
+        </div>
+      </form>
+    </div>
+  </main>
 </body>
+<script src="./app.js"></script>
 
 </html>

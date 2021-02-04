@@ -1,10 +1,8 @@
-
-
 .form-group {
   position: relative;
 }
 .button-container {
-  width: 100%
+  width: 100%;
 }
 .button-container .btn-submit {
   background: transparent;
@@ -13,8 +11,12 @@
   width: 100%;
   min-height: 64px;
   cursor: pointer;
-  border: 1px solid #323232;
+  border: 1px solid #888;
   margin-top: 30px;
+}
+
+.button-container .btn-submit:disabled {
+  border: none;
 }
 
 #form {
@@ -41,8 +43,12 @@
   padding: 12px 15px;
   padding-right: 50px;
   color: #fff;
-  font-size: 18px;
+  font-size: 14px;
   margin: 8px 0;
+}
+#form #email::placeholder,
+#form #password::placeholder {
+  font-size: 12px;
 }
 .indicator {
   position: absolute;
@@ -53,11 +59,24 @@
   background: #555;
   border-radius: 50%;
 }
+
 .valid .indicator {
   background: #0f0;
   box-shadow: 0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0, 0 0 40px #0f0;
 }
+
 .invalid .indicator {
   background: #f00;
   box-shadow: 0 0 5px #f00, 0 0 10px #f00, 0 0 20px #f00, 0 0 40px #f00;
+}
+
+.checks {
+  color: #888888;
+  font-size: 10px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.checks span {
+  display: inline-block;
 }

@@ -48,6 +48,22 @@ class App {
   }
 
   initializeEvents() {
+    this.basicValidateToForm();
+    this.app.form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      // criar o payload aqui
+    });
+  }
+  basicValidateToForm() {
+    // this.app.btnSubmitLogin.setAttribute("disabled", true);
+    this.isValid = {
+      validEmail: false,
+      validLength: false,
+      validLetter: false,
+      validNumber: false,
+      validSpecial: false,
+    };
+
     // patterns
     const patternEmail = /^[^ ]+@[a-z]+\.[a-z]{2,3}$/;
     const patterNumber = /\d+/g;
@@ -56,22 +72,47 @@ class App {
 
     // events password
     this.app.password.addEventListener("keyup", ({ target }) => {
-      const validNumber = patterNumber.test(target.value);
-      const validSpecial = patterSpecial.test(target.value);
-      const validLetter = patterLetter.test(target.value);
-      const validLength = target.value.length >= 8 ? true : false;
+      this.isValid.validNumber =
+        target.value.match(patterNumber) != null ? true : false;
+      this.isValid.validSpecial =
+        target.value.match(patterSpecial) != null ? true : false;
+      this.isValid.validLetter =
+        target.value.match(patterLetter) != null ? true : false;
+      this.isValid.validLength = target.value.length >= 8 ? true : false;
+
+      if (
+        this.isValid.validNumber &&
+        this.isValid.validSpecial &&
+        this.isValid.validLetter &&
+        this.isValid.validLength
+      ) {
+        this.app.labelChecks.style.display = "none";
+        this.app.containerPassword.classList.add("valid");
+        this.app.containerPassword.classList.remove("invalid");
+      } else {
+        this.app.labelChecks.style.display = "block";
+        this.app.containerPassword.classList.remove("valid");
+        this.app.containerPassword.classList.add("invalid");
+      }
+      this.app.btnSubmitLogin.disabled = Object.values(this.isValid).includes(
+        false
+      );
     });
 
     // events email
     this.app.email.addEventListener("keyup", ({ target }) => {
-      const valid = patternEmail.test(target.value);
-      if (valid) {
-        this.app.form.classList.add("valid");
-        this.app.form.classList.remove("invalid");
+      this.isValid.validEmail =
+        target.value.match(patternEmail) != null ? true : false;
+      if (this.isValid.validEmail) {
+        this.app.containerEmail.classList.add("valid");
+        this.app.containerEmail.classList.remove("invalid");
       } else {
-        this.app.form.classList.remove("valid");
-        this.app.form.classList.add("invalid");
+        this.app.containerEmail.classList.remove("valid");
+        this.app.containerEmail.classList.add("invalid");
       }
+      this.app.btnSubmitLogin.disabled = Object.values(this.isValid).includes(
+        false
+      );
     });
   }
 }

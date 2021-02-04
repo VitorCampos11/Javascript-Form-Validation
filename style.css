@@ -79,14 +79,14 @@ box-shadow:  0 0 5px #f00,
                        0 0 20px #f00,
                        0 0 40px #f00;
 }
-#form.valid .indicator1 {
+#form.validPassword .indicator1 {
   background: #0f0;
   box-shadow:  0 0 5px #0f0,
                          0 0 10px #0f0,
                          0 0 20px #0f0,
                          0 0 40px #0f0;
   }
-  #form.invalid .indicator1 {
+  #form.invalidPassword .indicator1 {
   background: #f00;
   box-shadow:  0 0 5px #f00,
                          0 0 10px #f00,

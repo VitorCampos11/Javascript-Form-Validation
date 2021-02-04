@@ -14,12 +14,15 @@
       <h3>Email Validation Check</h3>
       <form id="form">
         <div class="form-group">
-          <input type="text" id="email" placeholder="Enter Email Address" onkeyup="validate();">
+          <input type="text" id="email" placeholder="E-mail" onkeyup="validateEmail()" required>
           <span class="indicator"></span>
         </div>
         <div class="form-group">
-          <input type="text" id="password" placeholder="Enter Email Address" onkeyup="validate();">
+          <input type="password" id="password" placeholder="Senha" onkeyup="validatePassword()" required>
           <span class="indicator"></span>
+        </div>
+        <div class="button-container">
+          <button class="btn-submit" type="submit">ENTRAR</button>
         </div>
       </form>
     </div>

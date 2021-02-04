@@ -1,7 +1,3 @@
-/*
- * JAVASCRIPT PROCEDURAL - EXECUTA FUNÇOES DE ACORDO COM SUA DECLARÇÃO
- */
-
 // (function () {
 //   if (document.readyState === "complete") {
 //     validateEmail();
@@ -65,7 +61,7 @@ class App {
     };
 
     // patterns
-    const patternEmail = /^[^ ]+@[a-z]+\.[a-z]{2,3}$/;
+    const patternEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const patterNumber = /\d+/g;
     const patterSpecial = /[^A-Za-z0-9]+/g;
     const patterLetter = /[A-Za-z]+/g;
@@ -103,6 +99,7 @@ class App {
     this.app.email.addEventListener("keyup", ({ target }) => {
       this.isValid.validEmail =
         target.value.match(patternEmail) != null ? true : false;
+
       if (this.isValid.validEmail) {
         this.app.containerEmail.classList.add("valid");
         this.app.containerEmail.classList.remove("invalid");
